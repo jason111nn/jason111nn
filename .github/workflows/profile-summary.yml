@@ -24,7 +24,7 @@ jobs:
       - name: Create dist directory
         run: mkdir -p dist
 
-      # 2. 🐍 生成貪食蛇 (保持你原本成功的設定)
+      # 2. 🐍 生成貪食蛇 (放到 dist/)
       - name: generate github-contribution-grid-snake.svg
         uses: Platane/snk/svg-only@v3
         with:
@@ -33,30 +33,33 @@ jobs:
             dist/github-contribution-grid-snake.svg
             dist/github-contribution-grid-snake-dark.svg?palette=github-dark
 
-      # 3. 📊 生成統計圖 (使用 env 避開 Unexpected input)
+      # 3. 📊 生成統計圖 (避開路徑地雷)
       - name: generate github-stats.svg
-        uses: lowlighter/metrics@master # 改用 master 分支通常更穩定
+        uses: lowlighter/metrics@latest
         with:
           token: ${{ secrets.GH_STATS_TOKEN }}
           user: jason111nn
           template: classic
           base: header, community, repositories, metadata
           config_timezone: Asia/Taipei
-          filename: github-stats.svg # 先產出到根目錄
+          
+          # 這裡不設定 filename，讓它用預設的 github-metrics.svg
+          # 這裡也不設 config_theme，避免 Unexpected input 警告
+          
           plugin_languages: yes
           plugin_languages_sections: most-used
           plugin_languages_details: percentage
           output_action: none
-        env:
-          CONFIG_THEME: dracula # <--- 關鍵：透過環境變數傳入
 
-      # 3.5 🚚 搬運工：手動把統計圖移進 dist
-      - name: Move stats to dist
+      - name: Move and rename stats
         run: |
-          if [ -f github-stats.svg ]; then
-            mv github-stats.svg dist/
+          # metrics 預設會生出 github-metrics.svg
+          if [ -f github-metrics.svg ]; then
+            mv github-metrics.svg dist/github-stats.svg
+            echo "Success: github-stats.svg moved to dist/"
           else
-            echo "Error: github-stats.svg was not generated!"
+            echo "Error: github-metrics.svg was not found in root!"
+            ls -la # 印出檔案列表幫你 Debug
             exit 1
           fi
 
