@@ -8,7 +8,6 @@ on:
       - main
   workflow_dispatch:
 
-# 設定環境變數解決 Node 20 警告問題
 env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
@@ -51,6 +50,8 @@ jobs:
           plugin_languages_sections: most-used
           plugin_languages_details: percentage
           output_action: none
+          debug: yes
+          verbose: yes
 
       - name: Move and Verify stats
         run: |
