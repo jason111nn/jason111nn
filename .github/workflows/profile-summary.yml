@@ -24,7 +24,7 @@ jobs:
       - name: Create dist directory
         run: mkdir -p dist
 
-      # 2. 🐍 生成貪食蛇 (放到 dist/)
+      # 2. 🐍 生成貪食蛇 (存入 dist/)
       - name: generate github-contribution-grid-snake.svg
         uses: Platane/snk/svg-only@v3
         with:
@@ -33,8 +33,7 @@ jobs:
             dist/github-contribution-grid-snake.svg
             dist/github-contribution-grid-snake-dark.svg?palette=github-dark
 
-      # 3. 📊 生成專業統計圖 (取代原本失效的工具)
-      # 產出的檔名會叫 github-stats.svg，這樣你不用改 README 的連結
+      # 3. 📊 生成統計圖 (直接存入 dist/)
       - name: generate github-stats.svg
         uses: lowlighter/metrics@latest
         with:
@@ -43,18 +42,15 @@ jobs:
           template: classic
           base: header, community, repositories, metadata
           config_timezone: Asia/Taipei
-          filename: dist/github-stats.svg
-          config_display: columns
-          # 設定 Dracula 風格配色
-          base_indepth: yes
-          config_order: base.header, base.repositories, base.metadata
+          config_theme: dracula
+          # 修正路徑：直接產出到 dist 資料夾內
+          filename: dist/github-stats.svg 
           plugin_languages: yes
           plugin_languages_sections: most-used
           plugin_languages_details: percentage
-          # 這裡不讓它自動 commit，我們統一由最後一個 step 處理
           output_action: none
 
-      # 4. 把產生的 svg (蛇 + 統計圖) 推送到 output 分支
+      # 4. 把 dist 內的所有檔案推送到 output 分支
       - name: push all contents to the output branch
         uses: crazy-max/ghaction-github-pages@v4
         with:
