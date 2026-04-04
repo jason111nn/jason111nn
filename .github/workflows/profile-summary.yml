@@ -14,16 +14,17 @@ permissions:
 jobs:
   generate:
     runs-on: ubuntu-latest
-    timeout-minutes: 10 # 稍微增加時間，因為要跑兩組圖表
+    timeout-minutes: 15
     
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
+      # 1. 建立輸出目錄
       - name: Create dist directory
         run: mkdir -p dist
 
-      # 產生 貪食蛇 貢獻圖
+      # 2. 🐍 生成貪食蛇 (放到 dist/)
       - name: generate github-contribution-grid-snake.svg
         uses: Platane/snk/svg-only@v3
         with:
@@ -32,15 +33,28 @@ jobs:
             dist/github-contribution-grid-snake.svg
             dist/github-contribution-grid-snake-dark.svg?palette=github-dark
 
-      # 產生 GitHub 統計數據圖
+      # 3. 📊 生成專業統計圖 (取代原本失效的工具)
+      # 產出的檔名會叫 github-stats.svg，這樣你不用改 README 的連結
       - name: generate github-stats.svg
-        uses: teoxoy/github-stats-action@v1.3.1
+        uses: lowlighter/metrics@latest
         with:
           token: ${{ secrets.GH_STATS_TOKEN }}
-          filename: dist/github-stats.svg 
-          theme: dracula 
+          user: jason111nn
+          template: classic
+          base: header, community, repositories, metadata
+          config_timezone: Asia/Taipei
+          filename: dist/github-stats.svg
+          config_display: columns
+          # 設定 Dracula 風格配色
+          base_indepth: yes
+          config_order: base.header, base.repositories, base.metadata
+          plugin_languages: yes
+          plugin_languages_sections: most-used
+          plugin_languages_details: percentage
+          # 這裡不讓它自動 commit，我們統一由最後一個 step 處理
+          output_action: none
 
-      # 將所有產生的 svg 推送到 output 分支
+      # 4. 把產生的 svg (蛇 + 統計圖) 推送到 output 分支
       - name: push all contents to the output branch
         uses: crazy-max/ghaction-github-pages@v4
         with:
