@@ -32,6 +32,8 @@
     <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/jason111nn/jason111nn/output/github-contribution-grid-snake.svg">
     <img alt="github contribution snake" src="https://raw.githubusercontent.com/jason111nn/jason111nn/output/github-contribution-grid-snake.svg">
   </picture>
+  <br/>
+  <sub>Generated with <a href="https://github.com/Platane/snk">Platane/snk</a></sub>
 </p>
 
 ---
