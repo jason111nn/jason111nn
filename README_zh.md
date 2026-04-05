@@ -15,6 +15,12 @@
   來自台灣的高中生 | 開源愛好者 | 隨心所欲將創意實體化的開發者。
 </p>
 
+<p align="center">
+  <a href="https://jason111nn.github.io/">
+    <img src="https://img.shields.io/badge/前往我的部落格-0d1117?style=for-the-badge&logo=vuedotjs&logoColor=white" />
+  </a>
+</p>
+
 ---
 
 ### 📢 近況更新 (2026/04)

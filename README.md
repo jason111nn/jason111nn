@@ -15,6 +15,12 @@
   High school student from Taiwan | Open source enthusiast | Bringing ideas to life at my own pace.
 </p>
 
+<p align="center">
+  <a href="https://jason111nn.github.io/">
+    <img src="https://img.shields.io/badge/VISIT%20MY%20BLOG-0d1117?style=for-the-badge&logo=vuedotjs&logoColor=white" />
+  </a>
+</p>
+
 ---
 
 ### 📢 Latest Update (2026/04)
